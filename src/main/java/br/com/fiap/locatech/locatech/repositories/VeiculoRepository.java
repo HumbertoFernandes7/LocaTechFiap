@@ -15,5 +15,5 @@ public interface VeiculoRepository {
 
     Integer update(Veiculo veiculo, Long id);
 
-    Integer delete(Veiculo veiculo, Long id);
+    Integer delete(Long id);
 }

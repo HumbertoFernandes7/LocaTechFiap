@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("veiculos")
+@RequestMapping("/veiculos")
 public class VeiculoController {
 
     private static final Logger logger = LoggerFactory.getLogger(VeiculoController.class);
@@ -22,7 +22,7 @@ public class VeiculoController {
         this.veiculoService = veiculoService;
     }
 
-    @GetMapping()
+    @GetMapping
     public ResponseEntity<List<Veiculo>> findAllVeiculos(@RequestParam("page") int page, @RequestParam("size") int size) {
         logger.info("Iniciando listagem de veiculos");
         var veiculos = this.veiculoService.findAllVeiculos(page, size);
@@ -31,8 +31,26 @@ public class VeiculoController {
 
     @GetMapping("/{id}")
     public ResponseEntity<Optional<Veiculo>> findVeiculos(@PathVariable Long id) {
-        logger.info("Iniciando buscar de veiculo pelo id");
+        logger.info("Iniciando busca de veiculo pelo id");
         var veiculo = this.veiculoService.findById(id);
         return ResponseEntity.ok(veiculo);
+    }
+
+    @PostMapping
+    public ResponseEntity<Void> saveVeiculo(@RequestBody Veiculo veiculo) {
+        this.veiculoService.saveVeiculo(veiculo);
+        return ResponseEntity.status(201).build();
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Void> updateVeiculo(@RequestBody Veiculo veiculo, @PathVariable("id") Long id) {
+        this.veiculoService.updateVeiculo(veiculo, id);
+        return ResponseEntity.status(204).build();
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteVeiculo(@PathVariable("id") Long id) {
+        this.veiculoService.delete(id);
+        return ResponseEntity.ok().build();
     }
 }

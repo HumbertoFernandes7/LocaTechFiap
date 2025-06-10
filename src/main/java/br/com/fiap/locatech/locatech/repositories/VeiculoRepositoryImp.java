@@ -29,7 +29,7 @@ public class VeiculoRepositoryImp implements VeiculoRepository {
     @Override
     public List<Veiculo> findAll(int size, int offset) {
         return this.jdbcClient
-                .sql("SELECT * FROM veiculos LIMIT :size OFFSET: offset")
+                .sql("SELECT * FROM veiculos LIMIT :size OFFSET :offset")
                 .param("size", size)
                 .param("offset", offset)
                 .query(Veiculo.class)
@@ -65,7 +65,7 @@ public class VeiculoRepositoryImp implements VeiculoRepository {
     }
 
     @Override
-    public Integer delete(Veiculo veiculo, Long id) {
+    public Integer delete(Long id) {
         return this.jdbcClient
                 .sql("DELETE FROM veiculos WHERE id = :id")
                 .param("id", id)
